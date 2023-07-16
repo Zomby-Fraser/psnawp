@@ -75,7 +75,7 @@ class RequestBuilder:
 
         response = requests.get(url=kwargs["url"], headers=headers, params=params, data=data)
         response_checker(response)
-        return response
+        return response.json()
 
     def patch(self, **kwargs: Any) -> requests.Response:
         """Handles the POST requests and returns the requests.Response object.
