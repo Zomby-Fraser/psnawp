@@ -1,14 +1,36 @@
-<?xml version="1.0" encoding="utf-8"?><testsuites><testsuite name="pytest" errors="64" failures="1" skipped="0" tests="69" time="2.394" timestamp="2023-07-12T19:50:18.704138" hostname="fv-az617-154"><testcase classname="tests.unit_tests.test_authenticator" name="test_authenticator__access_token_from_refresh_token" time="0.092"><failure message="AssertionError: assert 'VaultTec-Co' == ''&#10;  + VaultTec-Co">@pytest.mark.vcr()
+<?xml version="1.0" encoding="utf-8"?><testsuites><testsuite name="pytest" errors="64" failures="1" skipped="0" tests="69" time="1.769" timestamp="2023-07-16T04:57:31.121744" hostname="fv-az621-935"><testcase classname="tests.unit_tests.test_authenticator" name="test_authenticator__access_token_from_refresh_token" time="0.052"><failure message="AttributeError: 'dict' object has no attribute 'json'">@pytest.mark.vcr()
     def test_authenticator__access_token_from_refresh_token():
         with my_vcr.use_cassette(f"{inspect.currentframe().f_code.co_name}.yaml"):
             psnawp = psnawp_api.psnawp.PSNAWP(os.getenv("NPSSO_CODE"))
             psnawp._request_builder.authenticator._auth_properties["access_token_expires_at"] = time.time() - 3600
             client = psnawp.me()
 &gt;           assert client.online_id == os.getenv("USER_NAME")
-E           AssertionError: assert 'VaultTec-Co' == ''
-E             + VaultTec-Co
 
-tests/unit_tests/test_authenticator.py:17: AssertionError</failure></testcase><testcase classname="tests.unit_tests.test_client" name="test_client__authentication" time="0.041" /><testcase classname="tests.unit_tests.test_client" name="test_client__incorrect_npsso" time="0.027" /><testcase classname="tests.unit_tests.test_client" name="test_client__online_id" time="0.370"><error message="failed on setup with &quot;psnawp_api.core.psnawp_exceptions.PSNAWPAuthenticationError: Your npsso code has expired or is incorrect. Please generate a new code!&quot;">@pytest.fixture(scope="session")
+tests/unit_tests/test_authenticator.py:17: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/opt/hostedtoolcache/Python/3.11.4/x64/lib/python3.11/site-packages/psnawp_api/models/client.py:49: in online_id
+    response = self._request_builder.get(url=f"{BASE_PATH['profile_uri']}{API_PATH['profiles'].format(account_id=self.account_id)}").json()
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;[AttributeError("'dict' object has no attribute 'json'") raised in repr()] Client object at 0x7fb1ea0c1890&gt;
+
+    @property
+    def account_id(self) -&gt; str:
+        """Gets the account ID of the client logged in the api.
+    
+        :returns: accountID
+        :rtype: str
+    
+        .. code-block:: Python
+    
+            client = psnawp.me()
+            print(client.account_id)
+    
+        """
+&gt;       response = self._request_builder.get(url=f"{BASE_PATH['account_uri']}{API_PATH['my_account']}").json()
+E       AttributeError: 'dict' object has no attribute 'json'
+
+/opt/hostedtoolcache/Python/3.11.4/x64/lib/python3.11/site-packages/psnawp_api/models/client.py:66: AttributeError</failure></testcase><testcase classname="tests.unit_tests.test_client" name="test_client__authentication" time="0.027" /><testcase classname="tests.unit_tests.test_client" name="test_client__incorrect_npsso" time="0.019" /><testcase classname="tests.unit_tests.test_client" name="test_client__online_id" time="0.323"><error message="failed on setup with &quot;psnawp_api.core.psnawp_exceptions.PSNAWPAuthenticationError: Your npsso code has expired or is incorrect. Please generate a new code!&quot;">@pytest.fixture(scope="session")
     def psnawp_fixture():
         """Creates PSNAWP Instance Fixture for running all the units tests.
     
@@ -26,7 +48,7 @@ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     self._authenticate()
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 
-self = &lt;psnawp_api.core.authenticator.Authenticator object at 0x7fef811c6a50&gt;
+self = &lt;psnawp_api.core.authenticator.Authenticator object at 0x7fb1ea28b4d0&gt;
 
     def _authenticate(self) -&gt; None:
         """Authenticate using the npsso code provided in the constructor.
@@ -78,7 +100,7 @@ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     self._authenticate()
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 
-self = &lt;psnawp_api.core.authenticator.Authenticator object at 0x7fef811c6a50&gt;
+self = &lt;psnawp_api.core.authenticator.Authenticator object at 0x7fb1ea28b4d0&gt;
 
     def _authenticate(self) -&gt; None:
         """Authenticate using the npsso code provided in the constructor.
@@ -130,7 +152,7 @@ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     self._authenticate()
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 
-self = &lt;psnawp_api.core.authenticator.Authenticator object at 0x7fef811c6a50&gt;
+self = &lt;psnawp_api.core.authenticator.Authenticator object at 0x7fb1ea28b4d0&gt;
 
     def _authenticate(self) -&gt; None:
         """Authenticate using the npsso code provided in the constructor.
@@ -182,7 +204,7 @@ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     self._authenticate()
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 
-self = &lt;psnawp_api.core.authenticator.Authenticator object at 0x7fef811c6a50&gt;
+self = &lt;psnawp_api.core.authenticator.Authenticator object at 0x7fb1ea28b4d0&gt;
 
     def _authenticate(self) -&gt; None:
         """Authenticate using the npsso code provided in the constructor.
@@ -234,7 +256,7 @@ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     self._authenticate()
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 
-self = &lt;psnawp_api.core.authenticator.Authenticator object at 0x7fef811c6a50&gt;
+self = &lt;psnawp_api.core.authenticator.Authenticator object at 0x7fb1ea28b4d0&gt;
 
     def _authenticate(self) -&gt; None:
         """Authenticate using the npsso code provided in the constructor.
@@ -286,7 +308,7 @@ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     self._authenticate()
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 
-self = &lt;psnawp_api.core.authenticator.Authenticator object at 0x7fef811c6a50&gt;
+self = &lt;psnawp_api.core.authenticator.Authenticator object at 0x7fb1ea28b4d0&gt;
 
     def _authenticate(self) -&gt; None:
         """Authenticate using the npsso code provided in the constructor.
@@ -338,7 +360,7 @@ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     self._authenticate()
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 
-self = &lt;psnawp_api.core.authenticator.Authenticator object at 0x7fef811c6a50&gt;
+self = &lt;psnawp_api.core.authenticator.Authenticator object at 0x7fb1ea28b4d0&gt;
 
     def _authenticate(self) -&gt; None:
         """Authenticate using the npsso code provided in the constructor.
@@ -390,7 +412,7 @@ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     self._authenticate()
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 
-self = &lt;psnawp_api.core.authenticator.Authenticator object at 0x7fef811c6a50&gt;
+self = &lt;psnawp_api.core.authenticator.Authenticator object at 0x7fb1ea28b4d0&gt;
 
     def _authenticate(self) -&gt; None:
         """Authenticate using the npsso code provided in the constructor.
@@ -442,7 +464,7 @@ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     self._authenticate()
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 
-self = &lt;psnawp_api.core.authenticator.Authenticator object at 0x7fef811c6a50&gt;
+self = &lt;psnawp_api.core.authenticator.Authenticator object at 0x7fb1ea28b4d0&gt;
 
     def _authenticate(self) -&gt; None:
         """Authenticate using the npsso code provided in the constructor.
@@ -494,7 +516,7 @@ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     self._authenticate()
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 
-self = &lt;psnawp_api.core.authenticator.Authenticator object at 0x7fef811c6a50&gt;
+self = &lt;psnawp_api.core.authenticator.Authenticator object at 0x7fb1ea28b4d0&gt;
 
     def _authenticate(self) -&gt; None:
         """Authenticate using the npsso code provided in the constructor.
@@ -546,7 +568,7 @@ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     self._authenticate()
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 
-self = &lt;psnawp_api.core.authenticator.Authenticator object at 0x7fef811c6a50&gt;
+self = &lt;psnawp_api.core.authenticator.Authenticator object at 0x7fb1ea28b4d0&gt;
 
     def _authenticate(self) -&gt; None:
         """Authenticate using the npsso code provided in the constructor.
@@ -580,7 +602,7 @@ self = &lt;psnawp_api.core.authenticator.Authenticator object at 0x7fef811c6a50&
 &gt;               raise psnawp_exceptions.PSNAWPAuthenticationError("Your npsso code has expired or is incorrect. Please generate a new code!")
 E               psnawp_api.core.psnawp_exceptions.PSNAWPAuthenticationError: Your npsso code has expired or is incorrect. Please generate a new code!
 
-/opt/hostedtoolcache/Python/3.11.4/x64/lib/python3.11/site-packages/psnawp_api/core/authenticator.py:118: PSNAWPAuthenticationError</error></testcase><testcase classname="tests.unit_tests.test_client" name="test_client__trophies" time="0.001"><error message="failed on setup with &quot;psnawp_api.core.psnawp_exceptions.PSNAWPAuthenticationError: Your npsso code has expired or is incorrect. Please generate a new code!&quot;">@pytest.fixture(scope="session")
+/opt/hostedtoolcache/Python/3.11.4/x64/lib/python3.11/site-packages/psnawp_api/core/authenticator.py:118: PSNAWPAuthenticationError</error></testcase><testcase classname="tests.unit_tests.test_client" name="test_client__trophies" time="0.000"><error message="failed on setup with &quot;psnawp_api.core.psnawp_exceptions.PSNAWPAuthenticationError: Your npsso code has expired or is incorrect. Please generate a new code!&quot;">@pytest.fixture(scope="session")
     def psnawp_fixture():
         """Creates PSNAWP Instance Fixture for running all the units tests.
     
@@ -598,7 +620,7 @@ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     self._authenticate()
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 
-self = &lt;psnawp_api.core.authenticator.Authenticator object at 0x7fef811c6a50&gt;
+self = &lt;psnawp_api.core.authenticator.Authenticator object at 0x7fb1ea28b4d0&gt;
 
     def _authenticate(self) -&gt; None:
         """Authenticate using the npsso code provided in the constructor.
@@ -632,7 +654,7 @@ self = &lt;psnawp_api.core.authenticator.Authenticator object at 0x7fef811c6a50&
 &gt;               raise psnawp_exceptions.PSNAWPAuthenticationError("Your npsso code has expired or is incorrect. Please generate a new code!")
 E               psnawp_api.core.psnawp_exceptions.PSNAWPAuthenticationError: Your npsso code has expired or is incorrect. Please generate a new code!
 
-/opt/hostedtoolcache/Python/3.11.4/x64/lib/python3.11/site-packages/psnawp_api/core/authenticator.py:118: PSNAWPAuthenticationError</error></testcase><testcase classname="tests.unit_tests.test_client" name="test_client__trophy_groups_summary" time="0.001"><error message="failed on setup with &quot;psnawp_api.core.psnawp_exceptions.PSNAWPAuthenticationError: Your npsso code has expired or is incorrect. Please generate a new code!&quot;">@pytest.fixture(scope="session")
+/opt/hostedtoolcache/Python/3.11.4/x64/lib/python3.11/site-packages/psnawp_api/core/authenticator.py:118: PSNAWPAuthenticationError</error></testcase><testcase classname="tests.unit_tests.test_client" name="test_client__trophy_groups_summary" time="0.000"><error message="failed on setup with &quot;psnawp_api.core.psnawp_exceptions.PSNAWPAuthenticationError: Your npsso code has expired or is incorrect. Please generate a new code!&quot;">@pytest.fixture(scope="session")
     def psnawp_fixture():
         """Creates PSNAWP Instance Fixture for running all the units tests.
     
@@ -650,7 +672,7 @@ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     self._authenticate()
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 
-self = &lt;psnawp_api.core.authenticator.Authenticator object at 0x7fef811c6a50&gt;
+self = &lt;psnawp_api.core.authenticator.Authenticator object at 0x7fb1ea28b4d0&gt;
 
     def _authenticate(self) -&gt; None:
         """Authenticate using the npsso code provided in the constructor.
@@ -702,7 +724,7 @@ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     self._authenticate()
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 
-self = &lt;psnawp_api.core.authenticator.Authenticator object at 0x7fef811c6a50&gt;
+self = &lt;psnawp_api.core.authenticator.Authenticator object at 0x7fb1ea28b4d0&gt;
 
     def _authenticate(self) -&gt; None:
         """Authenticate using the npsso code provided in the constructor.
@@ -754,7 +776,7 @@ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     self._authenticate()
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 
-self = &lt;psnawp_api.core.authenticator.Authenticator object at 0x7fef811c6a50&gt;
+self = &lt;psnawp_api.core.authenticator.Authenticator object at 0x7fb1ea28b4d0&gt;
 
     def _authenticate(self) -&gt; None:
         """Authenticate using the npsso code provided in the constructor.
@@ -806,7 +828,7 @@ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     self._authenticate()
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 
-self = &lt;psnawp_api.core.authenticator.Authenticator object at 0x7fef811c6a50&gt;
+self = &lt;psnawp_api.core.authenticator.Authenticator object at 0x7fb1ea28b4d0&gt;
 
     def _authenticate(self) -&gt; None:
         """Authenticate using the npsso code provided in the constructor.
@@ -858,7 +880,7 @@ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     self._authenticate()
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 
-self = &lt;psnawp_api.core.authenticator.Authenticator object at 0x7fef811c6a50&gt;
+self = &lt;psnawp_api.core.authenticator.Authenticator object at 0x7fb1ea28b4d0&gt;
 
     def _authenticate(self) -&gt; None:
         """Authenticate using the npsso code provided in the constructor.
@@ -910,7 +932,7 @@ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     self._authenticate()
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 
-self = &lt;psnawp_api.core.authenticator.Authenticator object at 0x7fef811c6a50&gt;
+self = &lt;psnawp_api.core.authenticator.Authenticator object at 0x7fb1ea28b4d0&gt;
 
     def _authenticate(self) -&gt; None:
         """Authenticate using the npsso code provided in the constructor.
@@ -962,7 +984,7 @@ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     self._authenticate()
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 
-self = &lt;psnawp_api.core.authenticator.Authenticator object at 0x7fef811c6a50&gt;
+self = &lt;psnawp_api.core.authenticator.Authenticator object at 0x7fb1ea28b4d0&gt;
 
     def _authenticate(self) -&gt; None:
         """Authenticate using the npsso code provided in the constructor.
@@ -996,7 +1018,7 @@ self = &lt;psnawp_api.core.authenticator.Authenticator object at 0x7fef811c6a50&
 &gt;               raise psnawp_exceptions.PSNAWPAuthenticationError("Your npsso code has expired or is incorrect. Please generate a new code!")
 E               psnawp_api.core.psnawp_exceptions.PSNAWPAuthenticationError: Your npsso code has expired or is incorrect. Please generate a new code!
 
-/opt/hostedtoolcache/Python/3.11.4/x64/lib/python3.11/site-packages/psnawp_api/core/authenticator.py:118: PSNAWPAuthenticationError</error></testcase><testcase classname="tests.unit_tests.test_game_title" name="test_game_title__trophy_groups_summary" time="0.001"><error message="failed on setup with &quot;psnawp_api.core.psnawp_exceptions.PSNAWPAuthenticationError: Your npsso code has expired or is incorrect. Please generate a new code!&quot;">@pytest.fixture(scope="session")
+/opt/hostedtoolcache/Python/3.11.4/x64/lib/python3.11/site-packages/psnawp_api/core/authenticator.py:118: PSNAWPAuthenticationError</error></testcase><testcase classname="tests.unit_tests.test_game_title" name="test_game_title__trophy_groups_summary" time="0.000"><error message="failed on setup with &quot;psnawp_api.core.psnawp_exceptions.PSNAWPAuthenticationError: Your npsso code has expired or is incorrect. Please generate a new code!&quot;">@pytest.fixture(scope="session")
     def psnawp_fixture():
         """Creates PSNAWP Instance Fixture for running all the units tests.
     
@@ -1014,7 +1036,7 @@ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     self._authenticate()
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 
-self = &lt;psnawp_api.core.authenticator.Authenticator object at 0x7fef811c6a50&gt;
+self = &lt;psnawp_api.core.authenticator.Authenticator object at 0x7fb1ea28b4d0&gt;
 
     def _authenticate(self) -&gt; None:
         """Authenticate using the npsso code provided in the constructor.
@@ -1048,7 +1070,7 @@ self = &lt;psnawp_api.core.authenticator.Authenticator object at 0x7fef811c6a50&
 &gt;               raise psnawp_exceptions.PSNAWPAuthenticationError("Your npsso code has expired or is incorrect. Please generate a new code!")
 E               psnawp_api.core.psnawp_exceptions.PSNAWPAuthenticationError: Your npsso code has expired or is incorrect. Please generate a new code!
 
-/opt/hostedtoolcache/Python/3.11.4/x64/lib/python3.11/site-packages/psnawp_api/core/authenticator.py:118: PSNAWPAuthenticationError</error></testcase><testcase classname="tests.unit_tests.test_game_title" name="test_game_title__trophies_game_not_owned_by_user" time="0.001"><error message="failed on setup with &quot;psnawp_api.core.psnawp_exceptions.PSNAWPAuthenticationError: Your npsso code has expired or is incorrect. Please generate a new code!&quot;">@pytest.fixture(scope="session")
+/opt/hostedtoolcache/Python/3.11.4/x64/lib/python3.11/site-packages/psnawp_api/core/authenticator.py:118: PSNAWPAuthenticationError</error></testcase><testcase classname="tests.unit_tests.test_game_title" name="test_game_title__trophies_game_not_owned_by_user" time="0.000"><error message="failed on setup with &quot;psnawp_api.core.psnawp_exceptions.PSNAWPAuthenticationError: Your npsso code has expired or is incorrect. Please generate a new code!&quot;">@pytest.fixture(scope="session")
     def psnawp_fixture():
         """Creates PSNAWP Instance Fixture for running all the units tests.
     
@@ -1066,7 +1088,7 @@ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     self._authenticate()
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 
-self = &lt;psnawp_api.core.authenticator.Authenticator object at 0x7fef811c6a50&gt;
+self = &lt;psnawp_api.core.authenticator.Authenticator object at 0x7fb1ea28b4d0&gt;
 
     def _authenticate(self) -&gt; None:
         """Authenticate using the npsso code provided in the constructor.
@@ -1118,7 +1140,7 @@ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     self._authenticate()
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 
-self = &lt;psnawp_api.core.authenticator.Authenticator object at 0x7fef811c6a50&gt;
+self = &lt;psnawp_api.core.authenticator.Authenticator object at 0x7fb1ea28b4d0&gt;
 
     def _authenticate(self) -&gt; None:
         """Authenticate using the npsso code provided in the constructor.
@@ -1170,7 +1192,7 @@ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     self._authenticate()
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 
-self = &lt;psnawp_api.core.authenticator.Authenticator object at 0x7fef811c6a50&gt;
+self = &lt;psnawp_api.core.authenticator.Authenticator object at 0x7fb1ea28b4d0&gt;
 
     def _authenticate(self) -&gt; None:
         """Authenticate using the npsso code provided in the constructor.
@@ -1204,7 +1226,7 @@ self = &lt;psnawp_api.core.authenticator.Authenticator object at 0x7fef811c6a50&
 &gt;               raise psnawp_exceptions.PSNAWPAuthenticationError("Your npsso code has expired or is incorrect. Please generate a new code!")
 E               psnawp_api.core.psnawp_exceptions.PSNAWPAuthenticationError: Your npsso code has expired or is incorrect. Please generate a new code!
 
-/opt/hostedtoolcache/Python/3.11.4/x64/lib/python3.11/site-packages/psnawp_api/core/authenticator.py:118: PSNAWPAuthenticationError</error></testcase><testcase classname="tests.unit_tests.test_game_title" name="test_game_title__trophy_groups_summary_invalid_np_communication_id" time="0.001"><error message="failed on setup with &quot;psnawp_api.core.psnawp_exceptions.PSNAWPAuthenticationError: Your npsso code has expired or is incorrect. Please generate a new code!&quot;">@pytest.fixture(scope="session")
+/opt/hostedtoolcache/Python/3.11.4/x64/lib/python3.11/site-packages/psnawp_api/core/authenticator.py:118: PSNAWPAuthenticationError</error></testcase><testcase classname="tests.unit_tests.test_game_title" name="test_game_title__trophy_groups_summary_invalid_np_communication_id" time="0.000"><error message="failed on setup with &quot;psnawp_api.core.psnawp_exceptions.PSNAWPAuthenticationError: Your npsso code has expired or is incorrect. Please generate a new code!&quot;">@pytest.fixture(scope="session")
     def psnawp_fixture():
         """Creates PSNAWP Instance Fixture for running all the units tests.
     
@@ -1222,7 +1244,7 @@ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     self._authenticate()
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 
-self = &lt;psnawp_api.core.authenticator.Authenticator object at 0x7fef811c6a50&gt;
+self = &lt;psnawp_api.core.authenticator.Authenticator object at 0x7fb1ea28b4d0&gt;
 
     def _authenticate(self) -&gt; None:
         """Authenticate using the npsso code provided in the constructor.
@@ -1274,7 +1296,7 @@ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     self._authenticate()
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 
-self = &lt;psnawp_api.core.authenticator.Authenticator object at 0x7fef811c6a50&gt;
+self = &lt;psnawp_api.core.authenticator.Authenticator object at 0x7fb1ea28b4d0&gt;
 
     def _authenticate(self) -&gt; None:
         """Authenticate using the npsso code provided in the constructor.
@@ -1326,7 +1348,7 @@ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     self._authenticate()
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 
-self = &lt;psnawp_api.core.authenticator.Authenticator object at 0x7fef811c6a50&gt;
+self = &lt;psnawp_api.core.authenticator.Authenticator object at 0x7fb1ea28b4d0&gt;
 
     def _authenticate(self) -&gt; None:
         """Authenticate using the npsso code provided in the constructor.
@@ -1378,7 +1400,7 @@ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     self._authenticate()
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 
-self = &lt;psnawp_api.core.authenticator.Authenticator object at 0x7fef811c6a50&gt;
+self = &lt;psnawp_api.core.authenticator.Authenticator object at 0x7fb1ea28b4d0&gt;
 
     def _authenticate(self) -&gt; None:
         """Authenticate using the npsso code provided in the constructor.
@@ -1430,7 +1452,7 @@ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     self._authenticate()
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 
-self = &lt;psnawp_api.core.authenticator.Authenticator object at 0x7fef811c6a50&gt;
+self = &lt;psnawp_api.core.authenticator.Authenticator object at 0x7fb1ea28b4d0&gt;
 
     def _authenticate(self) -&gt; None:
         """Authenticate using the npsso code provided in the constructor.
@@ -1482,7 +1504,7 @@ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     self._authenticate()
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 
-self = &lt;psnawp_api.core.authenticator.Authenticator object at 0x7fef811c6a50&gt;
+self = &lt;psnawp_api.core.authenticator.Authenticator object at 0x7fb1ea28b4d0&gt;
 
     def _authenticate(self) -&gt; None:
         """Authenticate using the npsso code provided in the constructor.
@@ -1534,7 +1556,7 @@ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     self._authenticate()
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 
-self = &lt;psnawp_api.core.authenticator.Authenticator object at 0x7fef811c6a50&gt;
+self = &lt;psnawp_api.core.authenticator.Authenticator object at 0x7fb1ea28b4d0&gt;
 
     def _authenticate(self) -&gt; None:
         """Authenticate using the npsso code provided in the constructor.
@@ -1586,7 +1608,7 @@ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     self._authenticate()
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 
-self = &lt;psnawp_api.core.authenticator.Authenticator object at 0x7fef811c6a50&gt;
+self = &lt;psnawp_api.core.authenticator.Authenticator object at 0x7fb1ea28b4d0&gt;
 
     def _authenticate(self) -&gt; None:
         """Authenticate using the npsso code provided in the constructor.
@@ -1638,7 +1660,7 @@ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     self._authenticate()
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 
-self = &lt;psnawp_api.core.authenticator.Authenticator object at 0x7fef811c6a50&gt;
+self = &lt;psnawp_api.core.authenticator.Authenticator object at 0x7fb1ea28b4d0&gt;
 
     def _authenticate(self) -&gt; None:
         """Authenticate using the npsso code provided in the constructor.
@@ -1690,7 +1712,7 @@ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     self._authenticate()
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 
-self = &lt;psnawp_api.core.authenticator.Authenticator object at 0x7fef811c6a50&gt;
+self = &lt;psnawp_api.core.authenticator.Authenticator object at 0x7fb1ea28b4d0&gt;
 
     def _authenticate(self) -&gt; None:
         """Authenticate using the npsso code provided in the constructor.
@@ -1742,7 +1764,7 @@ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     self._authenticate()
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 
-self = &lt;psnawp_api.core.authenticator.Authenticator object at 0x7fef811c6a50&gt;
+self = &lt;psnawp_api.core.authenticator.Authenticator object at 0x7fb1ea28b4d0&gt;
 
     def _authenticate(self) -&gt; None:
         """Authenticate using the npsso code provided in the constructor.
@@ -1794,7 +1816,7 @@ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     self._authenticate()
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 
-self = &lt;psnawp_api.core.authenticator.Authenticator object at 0x7fef811c6a50&gt;
+self = &lt;psnawp_api.core.authenticator.Authenticator object at 0x7fb1ea28b4d0&gt;
 
     def _authenticate(self) -&gt; None:
         """Authenticate using the npsso code provided in the constructor.
@@ -1846,7 +1868,7 @@ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     self._authenticate()
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 
-self = &lt;psnawp_api.core.authenticator.Authenticator object at 0x7fef811c6a50&gt;
+self = &lt;psnawp_api.core.authenticator.Authenticator object at 0x7fb1ea28b4d0&gt;
 
     def _authenticate(self) -&gt; None:
         """Authenticate using the npsso code provided in the constructor.
@@ -1898,7 +1920,7 @@ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     self._authenticate()
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 
-self = &lt;psnawp_api.core.authenticator.Authenticator object at 0x7fef811c6a50&gt;
+self = &lt;psnawp_api.core.authenticator.Authenticator object at 0x7fb1ea28b4d0&gt;
 
     def _authenticate(self) -&gt; None:
         """Authenticate using the npsso code provided in the constructor.
@@ -1950,7 +1972,7 @@ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     self._authenticate()
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 
-self = &lt;psnawp_api.core.authenticator.Authenticator object at 0x7fef811c6a50&gt;
+self = &lt;psnawp_api.core.authenticator.Authenticator object at 0x7fb1ea28b4d0&gt;
 
     def _authenticate(self) -&gt; None:
         """Authenticate using the npsso code provided in the constructor.
@@ -2002,7 +2024,7 @@ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     self._authenticate()
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 
-self = &lt;psnawp_api.core.authenticator.Authenticator object at 0x7fef811c6a50&gt;
+self = &lt;psnawp_api.core.authenticator.Authenticator object at 0x7fb1ea28b4d0&gt;
 
     def _authenticate(self) -&gt; None:
         """Authenticate using the npsso code provided in the constructor.
@@ -2054,7 +2076,7 @@ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     self._authenticate()
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 
-self = &lt;psnawp_api.core.authenticator.Authenticator object at 0x7fef811c6a50&gt;
+self = &lt;psnawp_api.core.authenticator.Authenticator object at 0x7fb1ea28b4d0&gt;
 
     def _authenticate(self) -&gt; None:
         """Authenticate using the npsso code provided in the constructor.
@@ -2106,7 +2128,7 @@ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     self._authenticate()
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 
-self = &lt;psnawp_api.core.authenticator.Authenticator object at 0x7fef811c6a50&gt;
+self = &lt;psnawp_api.core.authenticator.Authenticator object at 0x7fb1ea28b4d0&gt;
 
     def _authenticate(self) -&gt; None:
         """Authenticate using the npsso code provided in the constructor.
@@ -2158,7 +2180,7 @@ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     self._authenticate()
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 
-self = &lt;psnawp_api.core.authenticator.Authenticator object at 0x7fef811c6a50&gt;
+self = &lt;psnawp_api.core.authenticator.Authenticator object at 0x7fb1ea28b4d0&gt;
 
     def _authenticate(self) -&gt; None:
         """Authenticate using the npsso code provided in the constructor.
@@ -2210,7 +2232,7 @@ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     self._authenticate()
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 
-self = &lt;psnawp_api.core.authenticator.Authenticator object at 0x7fef811c6a50&gt;
+self = &lt;psnawp_api.core.authenticator.Authenticator object at 0x7fb1ea28b4d0&gt;
 
     def _authenticate(self) -&gt; None:
         """Authenticate using the npsso code provided in the constructor.
@@ -2262,7 +2284,7 @@ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     self._authenticate()
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 
-self = &lt;psnawp_api.core.authenticator.Authenticator object at 0x7fef811c6a50&gt;
+self = &lt;psnawp_api.core.authenticator.Authenticator object at 0x7fb1ea28b4d0&gt;
 
     def _authenticate(self) -&gt; None:
         """Authenticate using the npsso code provided in the constructor.
@@ -2314,7 +2336,7 @@ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     self._authenticate()
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 
-self = &lt;psnawp_api.core.authenticator.Authenticator object at 0x7fef811c6a50&gt;
+self = &lt;psnawp_api.core.authenticator.Authenticator object at 0x7fb1ea28b4d0&gt;
 
     def _authenticate(self) -&gt; None:
         """Authenticate using the npsso code provided in the constructor.
@@ -2366,7 +2388,7 @@ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     self._authenticate()
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 
-self = &lt;psnawp_api.core.authenticator.Authenticator object at 0x7fef811c6a50&gt;
+self = &lt;psnawp_api.core.authenticator.Authenticator object at 0x7fb1ea28b4d0&gt;
 
     def _authenticate(self) -&gt; None:
         """Authenticate using the npsso code provided in the constructor.
@@ -2418,7 +2440,7 @@ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     self._authenticate()
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 
-self = &lt;psnawp_api.core.authenticator.Authenticator object at 0x7fef811c6a50&gt;
+self = &lt;psnawp_api.core.authenticator.Authenticator object at 0x7fb1ea28b4d0&gt;
 
     def _authenticate(self) -&gt; None:
         """Authenticate using the npsso code provided in the constructor.
@@ -2470,7 +2492,7 @@ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     self._authenticate()
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 
-self = &lt;psnawp_api.core.authenticator.Authenticator object at 0x7fef811c6a50&gt;
+self = &lt;psnawp_api.core.authenticator.Authenticator object at 0x7fb1ea28b4d0&gt;
 
     def _authenticate(self) -&gt; None:
         """Authenticate using the npsso code provided in the constructor.
@@ -2522,7 +2544,7 @@ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     self._authenticate()
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 
-self = &lt;psnawp_api.core.authenticator.Authenticator object at 0x7fef811c6a50&gt;
+self = &lt;psnawp_api.core.authenticator.Authenticator object at 0x7fb1ea28b4d0&gt;
 
     def _authenticate(self) -&gt; None:
         """Authenticate using the npsso code provided in the constructor.
@@ -2574,7 +2596,7 @@ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     self._authenticate()
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 
-self = &lt;psnawp_api.core.authenticator.Authenticator object at 0x7fef811c6a50&gt;
+self = &lt;psnawp_api.core.authenticator.Authenticator object at 0x7fb1ea28b4d0&gt;
 
     def _authenticate(self) -&gt; None:
         """Authenticate using the npsso code provided in the constructor.
@@ -2626,7 +2648,7 @@ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     self._authenticate()
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 
-self = &lt;psnawp_api.core.authenticator.Authenticator object at 0x7fef811c6a50&gt;
+self = &lt;psnawp_api.core.authenticator.Authenticator object at 0x7fb1ea28b4d0&gt;
 
     def _authenticate(self) -&gt; None:
         """Authenticate using the npsso code provided in the constructor.
@@ -2678,7 +2700,7 @@ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     self._authenticate()
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 
-self = &lt;psnawp_api.core.authenticator.Authenticator object at 0x7fef811c6a50&gt;
+self = &lt;psnawp_api.core.authenticator.Authenticator object at 0x7fb1ea28b4d0&gt;
 
     def _authenticate(self) -&gt; None:
         """Authenticate using the npsso code provided in the constructor.
@@ -2730,7 +2752,7 @@ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     self._authenticate()
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 
-self = &lt;psnawp_api.core.authenticator.Authenticator object at 0x7fef811c6a50&gt;
+self = &lt;psnawp_api.core.authenticator.Authenticator object at 0x7fb1ea28b4d0&gt;
 
     def _authenticate(self) -&gt; None:
         """Authenticate using the npsso code provided in the constructor.
@@ -2782,7 +2804,7 @@ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     self._authenticate()
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 
-self = &lt;psnawp_api.core.authenticator.Authenticator object at 0x7fef811c6a50&gt;
+self = &lt;psnawp_api.core.authenticator.Authenticator object at 0x7fb1ea28b4d0&gt;
 
     def _authenticate(self) -&gt; None:
         """Authenticate using the npsso code provided in the constructor.
@@ -2816,7 +2838,7 @@ self = &lt;psnawp_api.core.authenticator.Authenticator object at 0x7fef811c6a50&
 &gt;               raise psnawp_exceptions.PSNAWPAuthenticationError("Your npsso code has expired or is incorrect. Please generate a new code!")
 E               psnawp_api.core.psnawp_exceptions.PSNAWPAuthenticationError: Your npsso code has expired or is incorrect. Please generate a new code!
 
-/opt/hostedtoolcache/Python/3.11.4/x64/lib/python3.11/site-packages/psnawp_api/core/authenticator.py:118: PSNAWPAuthenticationError</error></testcase><testcase classname="tests.unit_tests.test_user" name="test_user__trophy_titles_for_title_forbidden" time="0.002"><error message="failed on setup with &quot;psnawp_api.core.psnawp_exceptions.PSNAWPAuthenticationError: Your npsso code has expired or is incorrect. Please generate a new code!&quot;">@pytest.fixture(scope="session")
+/opt/hostedtoolcache/Python/3.11.4/x64/lib/python3.11/site-packages/psnawp_api/core/authenticator.py:118: PSNAWPAuthenticationError</error></testcase><testcase classname="tests.unit_tests.test_user" name="test_user__trophy_titles_for_title_forbidden" time="0.001"><error message="failed on setup with &quot;psnawp_api.core.psnawp_exceptions.PSNAWPAuthenticationError: Your npsso code has expired or is incorrect. Please generate a new code!&quot;">@pytest.fixture(scope="session")
     def psnawp_fixture():
         """Creates PSNAWP Instance Fixture for running all the units tests.
     
@@ -2834,7 +2856,7 @@ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     self._authenticate()
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 
-self = &lt;psnawp_api.core.authenticator.Authenticator object at 0x7fef811c6a50&gt;
+self = &lt;psnawp_api.core.authenticator.Authenticator object at 0x7fb1ea28b4d0&gt;
 
     def _authenticate(self) -&gt; None:
         """Authenticate using the npsso code provided in the constructor.
@@ -2886,7 +2908,7 @@ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     self._authenticate()
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 
-self = &lt;psnawp_api.core.authenticator.Authenticator object at 0x7fef811c6a50&gt;
+self = &lt;psnawp_api.core.authenticator.Authenticator object at 0x7fb1ea28b4d0&gt;
 
     def _authenticate(self) -&gt; None:
         """Authenticate using the npsso code provided in the constructor.
@@ -2938,7 +2960,7 @@ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     self._authenticate()
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 
-self = &lt;psnawp_api.core.authenticator.Authenticator object at 0x7fef811c6a50&gt;
+self = &lt;psnawp_api.core.authenticator.Authenticator object at 0x7fb1ea28b4d0&gt;
 
     def _authenticate(self) -&gt; None:
         """Authenticate using the npsso code provided in the constructor.
@@ -2990,7 +3012,7 @@ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     self._authenticate()
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 
-self = &lt;psnawp_api.core.authenticator.Authenticator object at 0x7fef811c6a50&gt;
+self = &lt;psnawp_api.core.authenticator.Authenticator object at 0x7fb1ea28b4d0&gt;
 
     def _authenticate(self) -&gt; None:
         """Authenticate using the npsso code provided in the constructor.
@@ -3042,7 +3064,7 @@ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     self._authenticate()
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 
-self = &lt;psnawp_api.core.authenticator.Authenticator object at 0x7fef811c6a50&gt;
+self = &lt;psnawp_api.core.authenticator.Authenticator object at 0x7fb1ea28b4d0&gt;
 
     def _authenticate(self) -&gt; None:
         """Authenticate using the npsso code provided in the constructor.
@@ -3094,7 +3116,7 @@ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     self._authenticate()
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 
-self = &lt;psnawp_api.core.authenticator.Authenticator object at 0x7fef811c6a50&gt;
+self = &lt;psnawp_api.core.authenticator.Authenticator object at 0x7fb1ea28b4d0&gt;
 
     def _authenticate(self) -&gt; None:
         """Authenticate using the npsso code provided in the constructor.
@@ -3146,7 +3168,7 @@ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     self._authenticate()
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 
-self = &lt;psnawp_api.core.authenticator.Authenticator object at 0x7fef811c6a50&gt;
+self = &lt;psnawp_api.core.authenticator.Authenticator object at 0x7fb1ea28b4d0&gt;
 
     def _authenticate(self) -&gt; None:
         """Authenticate using the npsso code provided in the constructor.
@@ -3198,7 +3220,7 @@ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     self._authenticate()
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 
-self = &lt;psnawp_api.core.authenticator.Authenticator object at 0x7fef811c6a50&gt;
+self = &lt;psnawp_api.core.authenticator.Authenticator object at 0x7fb1ea28b4d0&gt;
 
     def _authenticate(self) -&gt; None:
         """Authenticate using the npsso code provided in the constructor.
@@ -3250,7 +3272,7 @@ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     self._authenticate()
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 
-self = &lt;psnawp_api.core.authenticator.Authenticator object at 0x7fef811c6a50&gt;
+self = &lt;psnawp_api.core.authenticator.Authenticator object at 0x7fb1ea28b4d0&gt;
 
     def _authenticate(self) -&gt; None:
         """Authenticate using the npsso code provided in the constructor.
@@ -3302,7 +3324,7 @@ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     self._authenticate()
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 
-self = &lt;psnawp_api.core.authenticator.Authenticator object at 0x7fef811c6a50&gt;
+self = &lt;psnawp_api.core.authenticator.Authenticator object at 0x7fb1ea28b4d0&gt;
 
     def _authenticate(self) -&gt; None:
         """Authenticate using the npsso code provided in the constructor.
@@ -3336,4 +3358,4 @@ self = &lt;psnawp_api.core.authenticator.Authenticator object at 0x7fef811c6a50&
 &gt;               raise psnawp_exceptions.PSNAWPAuthenticationError("Your npsso code has expired or is incorrect. Please generate a new code!")
 E               psnawp_api.core.psnawp_exceptions.PSNAWPAuthenticationError: Your npsso code has expired or is incorrect. Please generate a new code!
 
-/opt/hostedtoolcache/Python/3.11.4/x64/lib/python3.11/site-packages/psnawp_api/core/authenticator.py:118: PSNAWPAuthenticationError</error></testcase><testcase classname="tests.unit_tests.test_utils_misc" name="test_play_duration_to_timedelta_valid_inputs" time="0.002" /><testcase classname="tests.unit_tests.test_utils_misc" name="test_play_duration_to_timedelta_invalid_inputs" time="0.003" /></testsuite></testsuites>
+/opt/hostedtoolcache/Python/3.11.4/x64/lib/python3.11/site-packages/psnawp_api/core/authenticator.py:118: PSNAWPAuthenticationError</error></testcase><testcase classname="tests.unit_tests.test_utils_misc" name="test_play_duration_to_timedelta_valid_inputs" time="0.001" /><testcase classname="tests.unit_tests.test_utils_misc" name="test_play_duration_to_timedelta_invalid_inputs" time="0.003" /></testsuite></testsuites>
